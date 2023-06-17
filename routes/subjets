@@ -1,0 +1,74 @@
+let Subject = require('../model/subject');
+
+
+function getSubjects(req, res) {
+    var aggregateQuery = Subject.aggregate();
+    Subject.aggregatePaginate(aggregateQuery,
+      {
+        page: parseInt(req.query.page) || 1,
+        limit: parseInt(req.query.limit) || 10,
+      },
+      (err, subject) => {
+        if (err) {
+          res.send(err);
+        }
+        res.send(subject);
+      }
+    );
+   }
+   
+
+function getSubject(req, res){
+    let subjectId = req.params.id;
+
+    Subject.findOne({id: subjectId}, (err, subject) =>{
+        if(err){res.send(err)}
+        res.json(subject);
+    })
+}
+
+
+function postSubject(req, res){
+    let subject = new Subject();
+    subject.nom = req.body.nom;
+    subject.photo = req.body.image;
+    subject.idProf = req.body.idProf;
+
+    console.log("POST matiere reçu :");
+    console.log(subject)
+
+    subject.save( (err) => {
+        if(err){
+            res.send('cant post matiere ', err);
+        }
+        res.json({ message: `${subject.nom} saved depuis la version HEROKU!`})
+    })
+}
+
+function updateSubject(req, res) {
+    console.log("UPDATE recu Matiere : ");
+    console.log(req.body);
+    Subject.findByIdAndUpdate(req.body._id, req.body, {new: true}, (err, subject) => {
+        if (err) {
+            console.log(err);
+            res.send(err)
+        } else {
+          res.json({message: `${subject.nom} updated!`})
+        }
+    });
+
+}
+
+function deleteSubject(req, res) {
+
+    Subject.findByIdAndRemove(req.params.id, (err, subject) => {
+        if (err) {
+            res.send(err);
+        }
+        res.json({message: `${subject.nom} deleted`});
+    })
+}
+
+
+
+module.exports = { getSubjects, postSubject, getSubject, updateSubject, deleteSubject};

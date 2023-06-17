@@ -69,7 +69,7 @@ app.route(prefix + '/user/:role')
   .post(user.getUsersByRole);
 
 app.route(prefix + '/user/:id')
-  .post(user.getUsersById);
+  .post(user.getUserById);
 
 app.route(prefix + '/login')
   .post(user.login);

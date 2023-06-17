@@ -10,8 +10,8 @@ let AssignmentSchema = Schema({
     rendu: Boolean,
     note: Number,
     remarque: String,
-    matiere: mongoose.Schema.Types.ObjectId,
-    auteur: mongoose.Schema.Types.ObjectId
+    idMatiere: mongoose.Schema.Types.ObjectId,
+    idEleve: mongoose.Schema.Types.ObjectId
 });
 
 AssignmentSchema.plugin(aggregatePaginate);

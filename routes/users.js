@@ -63,7 +63,7 @@ var config = require('../config');
   function getUsersByRole(req, res){
     let userRole = req.params.role;
 
-    User.find({profil: userRole}, (err, user) =>{
+    User.find({role: userRole}, (err, user) =>{
         if(err){res.send(err)}
         res.json(user);
     })

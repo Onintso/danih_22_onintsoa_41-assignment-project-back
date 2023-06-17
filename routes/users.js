@@ -60,5 +60,22 @@ var config = require('../config');
     });
   }
 
+  function getUsersByRole(req, res){
+    let userRole = req.params.role;
 
-  module.exports = {registerUser, login, logout, verifyToken};
+    User.find({profil: userRole}, (err, user) =>{
+        if(err){res.send(err)}
+        res.json(user);
+    })
+  }
+
+  function getUserById(req, res){
+    let userId = req.params.id;
+
+    User.findOne({id: userId}, (err, user) =>{
+        if(err){res.send(err)}
+        res.json(user);
+    })
+}
+
+  module.exports = {registerUser, login, logout, verifyToken, getUsersByRole, getUserById};

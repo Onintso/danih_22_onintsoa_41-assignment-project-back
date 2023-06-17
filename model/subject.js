@@ -5,7 +5,7 @@ let MatiereSchema = Schema({
     id: Number,
     nom: String,
     photo: String,
-    idProf: Number
+    idProf: mongoose.Schema.Types.ObjectId
 });
 
 mongoose.model('Subject', SubjectSchema);

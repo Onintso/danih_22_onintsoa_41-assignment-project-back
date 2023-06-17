@@ -3,13 +3,14 @@ let app = express();
 let bodyParser = require('body-parser');
 let assignment = require('./routes/assignments');
 let user = require('./routes/users');
+var User = require('./model/User');
 
 let mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
 //mongoose.set('debug', true);
 
 // remplacer toute cette chaine par l'URI de connexion à votre propre base dans le cloud s
-const uri = 'mongodb+srv://ekaly:ekaly123456@ekaly-cluster.qjan0.mongodb.net/ekaly?retryWrites=true&w=majority';
+const uri = 'mongodb+srv://ekaly:ekaly123456@ekaly-cluster.qjan0.mongodb.net/assignmentdb?retryWrites=true&w=majority';
 
 const options = {
   useNewUrlParser: true,
@@ -55,6 +56,21 @@ app.route(prefix + '/assignments/:id')
   
 app.route(prefix + '/users')
   .post(user.registerUser)
+  .get(user.verifyToken, function(req, res) {
+    User.findById(req.userId, { password: 0 }, function (err, user) {
+      if (err) return res.status(500).send("There was a problem finding the user.");
+      if (!user) return res.status(404).send("No user found.");
+      
+      res.status(200).send(user);
+    });
+    
+  });
+
+app.route(prefix + '/login')
+  .post(user.login);
+
+app.route(prefix + '/logout')
+  .get(user.logout);
 
 // On démarre le serveur
 app.listen(port, "0.0.0.0");

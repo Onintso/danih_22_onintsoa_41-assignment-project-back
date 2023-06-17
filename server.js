@@ -55,11 +55,11 @@ app.route(prefix + '/assignments/:id')
   .get(assignment.getAssignment)
   .delete(assignment.deleteAssignment);
   
-app.route(prefix + '/subjets')
+app.route(prefix + '/subjects')
   .get(subject.getSubjects)
   .post(subject.postSubject);
 
-app.route(prefix + '/subjet/:id')
+app.route(prefix + '/subject/:id')
   .get(subject.getSubject);
 
 app.route(prefix + '/users')

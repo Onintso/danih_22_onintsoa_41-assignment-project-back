@@ -31,7 +31,7 @@ function getSubject(req, res){
 function postSubject(req, res){
     let subject = new Subject();
     subject.nom = req.body.nom;
-    subject.photo = req.body.image;
+    subject.photo = req.body.photo;
     subject.idProf = req.body.idProf;
 
     console.log("POST matiere reçu :");
@@ -41,7 +41,7 @@ function postSubject(req, res){
         if(err){
             res.send('cant post matiere ', err);
         }
-        res.json({ message: `${subject.nom} saved depuis la version HEROKU!`})
+        res.json({ message: `${subject.nom} saved`})
     })
 }
 

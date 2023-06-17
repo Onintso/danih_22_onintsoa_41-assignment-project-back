@@ -11,4 +11,4 @@ let MatiereSchema = Schema({
 mongoose.model('Subject', SubjectSchema);
 
 // C'est à travers ce modèle Mongoose qu'on pourra faire le CRUD
-module.exports = mongoose.model('subject', SubjectSchema,'matiere');
+module.exports = mongoose.model('subject', SubjectSchema);

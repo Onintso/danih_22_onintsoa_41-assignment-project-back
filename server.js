@@ -55,15 +55,21 @@ app.route(prefix + '/assignments/:id')
   .get(assignment.getAssignment)
   .delete(assignment.deleteAssignment);
   
+app.route(prefix + '/subjects')
+  .get(subject.getSubjects)
+  .post(subject.postSubject);
+
+app.route(prefix + '/subject/:id')
+  .get(subject.getSubject);
 
 app.route(prefix + '/users')
   .post(user.registerUser);
  
 app.route(prefix + '/user/:role')
-  .get(user.getUsersByRole);
+  .post(user.getUsersByRole);
 
 app.route(prefix + '/user/:id')
-  .get(user.getUserById);
+  .post(user.getUserById);
 
 app.route(prefix + '/login')
   .post(user.login);
@@ -81,13 +87,6 @@ app.route(prefix + '/connected')
 
 app.route(prefix + '/logout')
   .get(user.logout);
-
-  app.route(prefix + '/subjects')
-  .get(subject.getSubjects)
-  .post(subject.postSubject);
-
-app.route(prefix + '/subject/:id')
-  .get(subject.getSubjectById);
 
 // On démarre le serveur
 app.listen(port, "0.0.0.0");

@@ -32,7 +32,7 @@ function getAssignments(req, res) {
 function getAssignment(req, res){
     let assignmentId = req.params.id;
 
-    Assignment.findOne({id: assignmentId}, (err, assignment) =>{
+    Assignment.findOne({_id: assignmentId}, (err, assignment) =>{
         if(err){res.send(err)}
         res.json(assignment);
     })
@@ -64,7 +64,7 @@ function updateAssignment(req, res) {
     console.log("UPDATE recu assignment : ");
     console.log(req.body);
     
-    Assignment.findByIdAndUpdate(req.body._id, req.body, {new: true}, (err, assignment) => {
+    Assignment.findByIdAndUpdate(req.body.id, req.body, {new: true}, (err, assignment) => {
         if (err) {
             console.log(err);
             res.send(err)

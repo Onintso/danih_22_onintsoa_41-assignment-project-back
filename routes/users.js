@@ -72,7 +72,7 @@ var config = require('../config');
   function getUserById(req, res){
     let userId = req.params.id;
 
-    User.findOne({id: userId}, (err, user) =>{
+    User.findOne({_id: userId}, (err, user) =>{
         if(err){res.send(err)}
         res.json(user);
     })

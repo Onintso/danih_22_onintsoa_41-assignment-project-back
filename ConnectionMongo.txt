@@ -1,1 +1,1 @@
-mongodb+srv://mb:toto@cluster0.5e6cs7n.mongodb.net/assignments?retryWrites=true&w=majority
+mongodb+srv://ekaly:ekaly123456@ekaly-cluster.qjan0.mongodb.net/ekaly?retryWrites=true&w=majority

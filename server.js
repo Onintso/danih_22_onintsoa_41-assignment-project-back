@@ -1,6 +1,7 @@
 let express = require('express');
 let app = express();
 let bodyParser = require('body-parser');
+let assignmentV = require('./routes/assignmentView');
 let assignment = require('./routes/assignments');
 let user = require('./routes/users');
 var User = require('./model/User');
@@ -47,29 +48,25 @@ let port = process.env.PORT || 8010;
 const prefix = '/api';
 
 app.route(prefix + '/assignments')
-  .get(assignment.getAssignments)
+  .get(assignmentV.getAssignments)
   .post(assignment.postAssignment)
   .put(assignment.updateAssignment);
 
-app.route(prefix + '/assignments/:id')
+app.route(prefix + '/assignments/:id')//pour les détails complet
+  .get(assignmentV.getAssignment)
+
+app.route(prefix + '/assignment/:id')//pour les détails partiels
   .get(assignment.getAssignment)
   .delete(assignment.deleteAssignment);
   
-app.route(prefix + '/subjects')
-  .get(subject.getSubjects)
-  .post(subject.postSubject);
-
-app.route(prefix + '/subject/:id')
-  .get(subject.getSubject);
-
 app.route(prefix + '/users')
   .post(user.registerUser);
  
 app.route(prefix + '/user/:role')
-  .post(user.getUsersByRole);
+  .get(user.getUsersByRole);
 
 app.route(prefix + '/user/:id')
-  .post(user.getUserById);
+  .get(user.getUserById);
 
 app.route(prefix + '/login')
   .post(user.login);
@@ -87,6 +84,13 @@ app.route(prefix + '/connected')
 
 app.route(prefix + '/logout')
   .get(user.logout);
+
+app.route(prefix + '/subjects')
+  .get(subject.getSubjects)
+  .post(subject.postSubject);
+
+app.route(prefix + '/subject/:id')
+  .get(subject.getSubject);
 
 // On démarre le serveur
 app.listen(port, "0.0.0.0");

@@ -1,0 +1,85 @@
+//--VUE COMPLET
+db.createView(
+  "view_assignment", // Nom de la vue
+  "assignments", // Collection source
+  [
+    {
+      $lookup: {
+        from: "subjects", // Collection pour la jointure avec matiere
+        localField: "idMatiere",
+        foreignField: "id",
+        as: "subject"
+      }
+    },
+    {
+      $unwind: "$subject" // Dérouler le tableau matiere résultant
+    },
+    {
+      $lookup: {
+        from: "users", // Collection pour la jointure avec user
+        localField: "subject.idProf",
+        foreignField: "id",
+        as: "prof"
+      }
+    },
+    {
+      $unwind: "$prof" // Dérouler le tableau user résultant
+    },
+    {
+      $project: {
+        nom: 1,
+        dateDeRendu: 1,
+        remarque: 1,
+        note: 1,
+        rendu: 1,
+        idEleve: 1,
+        "subject.nom": 1,
+        "subject.photo": 1,
+        "prof.id": 1,
+        "prof.nom": 1,
+        "prof.photo": 1,
+      }
+    }
+  ]
+)
+
+
+
+db.createView(
+    "assignmentslib", // Nom de la vue
+    "assignments", // Collection source
+    [
+        {
+            $lookup: {
+            from: "users",
+            localField: "auteur",
+            foreignField: "_id",
+            as: "auteur_info"
+            }
+        },
+        {
+            $lookup: {
+            from: "matieres",
+            localField: "matiere",
+            foreignField: "_id",
+            as: "matiere_info"
+            }
+        },
+        {
+            $project: {
+            _id: 1,
+            nom: 1,
+            dateDeRendu: 1,
+            rendu: 1,
+            note: 1,
+            remarques: 1,
+            "auteur_info.nomprenom": 1,
+            "auteur_info.email": 1,
+            "auteur_info.status": 1,
+            "auteur_info.image": 1,
+            "matiere_info.nom": 1,
+            "matiere_info.image": 1
+            }
+        }
+    ]
+);
